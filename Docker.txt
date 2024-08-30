@@ -1,0 +1,192 @@
+Docker
+
+docker download
+ -> docker CLI ,docker desktop
+
+docker -v
+
+
+-----
+for rum ubuntu in docker 
+>>> docker run -it ubuntu
+
+>> docker container ls   // show only running container
+
+>> docker container ls -a  // shows all container 
+
+>> docker start <container name>  // start container
+
+>> docker stop <container_name>  // stop container
+
+>> docker exex <container_name> ls  // run cmd under container then come back to terminal
+
+>> docker exec -it <container_name> bash   // remain inside the container 
+
+>> exit  // come out from container
+
+>> docker images ls // show the image 
+
+// port mapping 
+>> docker run -it -p 8000(system_pot):8000(Coontainer_port) <imagename>
+
+// for set environment variables 
+>> >> docker run -it -p 8000:8000 -e key=value -e key=value <imagename>
+
+
+=============================
+make dockerize a application
+=============================
+
+-> in project file create a file name with :
+	<< Dockerfile >>
+
+inside docker file 
+------->>>
+// write the commands which u want to install the resource or etc
+
+	FROM UBUNTU/NODEjs/..  // Base image name any
+	RUN apt-get update 	// update the pakages
+	RUN apt-get install -y curl	// curl tool instaal 
+	.
+	.
+	. . .
+
+	// copy the app folder & files 
+	// >> COPY <source> <destination>
+	
+	COPY pakage.json pakage.json
+	COPY main.js main.js
+	
+	RUN npm install 	/ for install npm pakages 
+	
+	ENTRYPOINT ["node","mail.js"]	//cmd after image is rum 
+	
+
+-------------
+create a image 
+	>> docker build -t <image_Name> <docker_file_path>
+
+for run image 
+	>> docker run -it <image_name>
+
+
+===============
+publish to hub
+===============
+hub.docker.com
+Create reposetary 
+   -> reposetary name
+   -> public 
+   ->> create
+
+>> create a image with given mane 
+	>> docker build -t <new_immageName_given>
+	
+	>> docker login 
+		-> username
+		-> password
+
+	>> docker push <new_ImageName>
+	
+	
+================
+Docker Compaose
+================
+create file with name :
+   < docker-compose.yml >	
+
+inside the file
+
+	version "3.0"
+	services:
+	   postgres:
+		image: postgres // hub image
+		   ports:
+			-"5212:5212"
+		   environment:
+			POSTGRES_USER: postgres
+			POSTGRES_DB•. review
+			POSTGRES_PASSWORD: password	
+	   radis:
+		..
+		.
+		.
+		.....
+
+
+------
+to run
+
+>> docker compose up
+
+>> docker compose down  // remove
+
+>> docker compose up -d  // run on backend
+
+
+
+-------------------------------
+Docker network 
+
+ping <containerName>
+
+>> docker network ls   // show the list of networks
+
+>> docker network inspect <containerName>
+
+------
+to create self network
+
+>> docker network create -d bridge <netwrk_name>
+
+>> docker network ls   // listed ur network  
+
+>> docker run -it --network=<created_Network_Name> --name <name> <OS (ubuntu)>
+
+
+--------------
+volume mapping 
+
+//for mounting the host machine folder in container machine
+>> docker run -it -v <path/expl to wnat to mount>:<path_to/incontainer>     /*  ex /User/deasktop/file01:/home/abc */
+
+-> now the file is mounted to host folder any changes make from any of the mahince can reflect in both machine
+
+
+// for create on volume 
+>> docker volume create my-vol
+
+>> docker run -d --mount my-vol
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
